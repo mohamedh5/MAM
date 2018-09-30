@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -27,7 +25,7 @@ public class ApplicationConfig {
 	    DriverManagerDataSource builder = new DriverManagerDataSource();
 	    builder.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 	    builder.setUrl("jdbc:sqlserver://Astra-Mang1;databaseName=test");
-	    builder.setUsername("root");
+	    builder.setUsername("sa");
 	    builder.setPassword("000000");
 	    return builder;
 	  }
