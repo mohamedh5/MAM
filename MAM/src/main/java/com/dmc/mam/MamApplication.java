@@ -1,4 +1,4 @@
-package com.dmc.MAM;
+package com.dmc.mam;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -2,8 +2,12 @@ package com.dmc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * This is a simple class , which main task is to bound a key and a value
@@ -19,6 +23,9 @@ import javax.persistence.Table;
 		)
 public class MetaData {
 
+	@Id
+    @GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid" , strategy = "uuid2")
 	private String id;
 	@Column(name="md_key")
 	private String key;
