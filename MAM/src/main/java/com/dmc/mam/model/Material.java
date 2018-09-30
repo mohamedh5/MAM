@@ -1,14 +1,17 @@
-package com.dmc.model;
+package com.dmc.mam.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlElement;
+
+import org.springframework.stereotype.Component;
 
 /**
  * this class hold all the data needed from ASTRA XML
@@ -17,6 +20,8 @@ import javax.xml.bind.annotation.XmlElement;
  * @version 1.0
  * @since 7/9/2018
  */
+@Component
+@Entity
 public class Material {
 	@Id
     private String id;
@@ -31,7 +36,7 @@ public class Material {
     private String outaddr;
     private String origInAddr;
     private String origOutAddr;
-    private int writeProtected;
+    //private int writeProtected;
     private String cat1;
     private String cat2;
     private String cat4;
@@ -198,19 +203,19 @@ public class Material {
         this.origOutAddr = origOutAddr;
     }
 
-    /**
-     * @return the writeProtected
-     */
-    public int getWriteProtected() {
-        return writeProtected;
-    }
-
-    /**
-     * @param writeProtected the writeProtected to set
-     */
-    public void setWriteProtected(int writeProtected) {
-        this.writeProtected = writeProtected;
-    }
+//    /**
+//     * @return the writeProtected
+//     */
+//    public int getWriteProtected() {
+//        return writeProtected;
+//    }
+//
+//    /**
+//     * @param writeProtected the writeProtected to set
+//     */
+//    public void setWriteProtected(int writeProtected) {
+//        this.writeProtected = writeProtected;
+//    }
 
     /**
      * @return the cat1

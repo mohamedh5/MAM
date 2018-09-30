@@ -1,4 +1,4 @@
-package com.dmc.model;
+package com.dmc.mam.model;
 
 import java.util.List;
 

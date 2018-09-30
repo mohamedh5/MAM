@@ -3,10 +3,16 @@ package com.dmc.MAM;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dmc.repository.MaterialJpaRepository;
+import com.dmc.mam.config.ApplicationConfig;
+import com.dmc.mam.repository.MaterialJpaRepository;
 
+@ContextConfiguration(classes = ApplicationConfig.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public class MaterialPersistenceTest {
 
 	@Autowired
@@ -17,4 +23,13 @@ public class MaterialPersistenceTest {
 		assertEquals("Wrong count ",5001, materilaJpa.count());
 	}
 
+	@Test
+	public void testExistsById() {
+		assertEquals("Exist ",true, materilaJpa.existsById("00045D9B5A89B1B5L1I"));
+	}
+	
+	@Test
+	public void testFindById() {
+		assertEquals("found ",true, materilaJpa.findById("00045D9B5A89B1B5L1I").isPresent());
+	}
 }

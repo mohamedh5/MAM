@@ -1,10 +1,17 @@
-package com.dmc.config;
+package com.dmc.mam.config;
+
+import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,19 +22,26 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories("com.dmc.repository")
+@EnableJpaRepositories(basePackages = "com.dmc.mam.repository")
 @EnableTransactionManagement
+@PropertySource("classpath:application.properties")
 public class ApplicationConfig {
 
+	@Autowired
+	private Environment env;
+	
 	 @Bean
 	  public DataSource dataSource() {
 
+		 System.out.println("**************************************************************************");
 	    DriverManagerDataSource builder = new DriverManagerDataSource();
-	    builder.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-	    builder.setUrl("jdbc:sqlserver://Astra-Mang1;databaseName=test");
-	    builder.setUsername("sa");
-	    builder.setPassword("000000");
+	    builder.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+	    builder.setUrl(env.getProperty("jdbc.url"));
+	    builder.setUsername(env.getProperty("jdbc.username"));
+	    builder.setPassword(env.getProperty("jdbc.password"));
+	    
 	    return builder;
+	    
 	  }
 
 	  @Bean
@@ -41,8 +55,9 @@ public class ApplicationConfig {
 
 	    LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 	    factory.setJpaVendorAdapter(vendorAdapter);
-	    factory.setPackagesToScan("com.dmc.model");
+	    factory.setPackagesToScan("com.dmc.mam.model");
 	    factory.setDataSource(dataSource());
+	    factory.setJpaProperties(jpaProperties());
 	    return factory;
 	  }
 
@@ -53,4 +68,15 @@ public class ApplicationConfig {
 	    txManager.setEntityManagerFactory(entityManagerFactory);
 	    return txManager;
 	  }
+	  
+	  @Bean
+	    public Properties jpaProperties()
+	    {
+	        Properties properties = new Properties();
+	        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+	        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+	        properties.put("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
+	        properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+	        return properties;
+	    }
 }

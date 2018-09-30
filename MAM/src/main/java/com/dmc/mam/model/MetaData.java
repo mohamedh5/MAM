@@ -1,4 +1,4 @@
-package com.dmc.model;
+package com.dmc.mam.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 /**
  * This is a simple class , which main task is to bound a key and a value
@@ -19,8 +20,10 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(
+		name = "metadata",
 		indexes = {@Index(name= "metadata_Index",columnList= "md_key,md_value",unique= false)}
 		)
+@Component
 public class MetaData {
 
 	@Id
