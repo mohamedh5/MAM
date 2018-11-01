@@ -1,6 +1,7 @@
 package com.dmc.mam.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlElement;
-
-import org.springframework.stereotype.Component;
 
 /**
  * this class hold all the data needed from ASTRA XML
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @since 7/9/2018
  */
-@Component
 @Entity
 public class Material {
 	@Id
@@ -36,18 +33,20 @@ public class Material {
     private String outaddr;
     private String origInAddr;
     private String origOutAddr;
-    //private int writeProtected;
+    private int writeProtected;
     private String cat1;
     private String cat2;
     private String cat4;
     private String mainQC;
-    
+    private LocalDateTime created;
+    private LocalDateTime modified;
     @OneToMany(orphanRemoval = true ,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<MetaData> metadata;
+    @OneToMany(orphanRemoval = true ,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<HistoryManager> history;
     
-    private LocalDateTime created;
-   
-    private LocalDateTime modified;
+    
+    
 
     /**
      * @return the id
@@ -203,19 +202,19 @@ public class Material {
         this.origOutAddr = origOutAddr;
     }
 
-//    /**
-//     * @return the writeProtected
-//     */
-//    public int getWriteProtected() {
-//        return writeProtected;
-//    }
-//
-//    /**
-//     * @param writeProtected the writeProtected to set
-//     */
-//    public void setWriteProtected(int writeProtected) {
-//        this.writeProtected = writeProtected;
-//    }
+    /**
+     * @return the writeProtected
+     */
+    public int getWriteProtected() {
+        return writeProtected;
+    }
+
+    /**
+     * @param writeProtected the writeProtected to set
+     */
+    public void setWriteProtected(int writeProtected) {
+        this.writeProtected = writeProtected;
+    }
 
     /**
      * @return the cat1
@@ -262,7 +261,6 @@ public class Material {
     /**
      * @return the mainQC
      */
-    @XmlElement(name = "Crit3")
     public String getMainQC() {
         return mainQC;
     }
@@ -315,4 +313,31 @@ public class Material {
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
+    /**
+	 * @return the History
+	 */
+	public List<HistoryManager> geHistory() {
+		return history;
+	}
+
+	/**
+	 * @param metadataHistory the History to add
+	 */
+	public void addHistory(HistoryManager history) {
+		if(this.history == null) 
+			this.history = new ArrayList<>();
+		if(this.history.size() > 2) {
+			this.history.remove(0);
+		}
+		this.history.add(history);
+	}
+
+	/**
+	 * @param history the history to set
+	 */
+	public void setHistory(List<HistoryManager> history) {
+		this.history = history;
+	}
+	
+	
 }

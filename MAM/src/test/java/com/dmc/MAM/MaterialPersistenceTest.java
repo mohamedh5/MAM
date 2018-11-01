@@ -1,17 +1,15 @@
 package com.dmc.MAM;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dmc.mam.config.ApplicationConfig;
 import com.dmc.mam.repository.MaterialJpaRepository;
 
-@ContextConfiguration(classes = ApplicationConfig.class)
+
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MaterialPersistenceTest {
 

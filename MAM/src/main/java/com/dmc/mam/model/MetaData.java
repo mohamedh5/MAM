@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Component;
 
 /**
  * This is a simple class , which main task is to bound a key and a value
@@ -19,20 +20,19 @@ import org.springframework.stereotype.Component;
  * @since 7/9/2018
  */
 @Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @Table(
 		name = "metadata",
-		indexes = {@Index(name= "metadata_Index",columnList= "md_key,md_value",unique= false)}
-		)
-@Component
+		indexes = {
+				@Index(name= "metadata_key_Index",columnList= "md_key",unique= false)})
 public class MetaData {
-
 	@Id
     @GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid" , strategy = "uuid2")
 	private String id;
 	@Column(name="md_key")
 	private String key;
-	@Column(name="md_value")
+	@Column(name="md_value",columnDefinition = "VARCHAR(MAX)")
 	private String value;
 
 	/**
@@ -55,34 +55,33 @@ public class MetaData {
      * Get the Key
      * @return the key
      */
-	public String getKey() {
-		return key;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	/**
+    /**
      * Set the Key 
      * 
      * the key will be something like :- epebDescription , ebepSeason , eAutoQC
      * @param key the key to set
      */
-	public void setKey(String key) {
-		this.key = key;
-	}
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	/**
+    /**
      * Get the value
      * @return the value
      */
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	 /**
+    /**
      * Set the value
      * @param value the value to set
      */
-	public void setValue(String value) {
-		this.value = value;
-	}
-
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
